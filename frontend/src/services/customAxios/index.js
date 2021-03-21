@@ -14,7 +14,7 @@ customAxios.interceptors.request.use( config => {
   if (config.url !== 'login') {
     if(token === undefined || token === null) {
       localStorage.clear();
-      window.location.href = '/#/';
+      window.location.href = '/#/login';
     }
     config.headers = {'Authorization':`Bearer ${token}`}
   }
@@ -31,9 +31,9 @@ customAxios.interceptors.request.use( config => {
 customAxios.interceptors.response.use(res => {
   return res;
 },(error)=>{
-  if(error.response.status === 401){
+  if(error.response.status === 401 || error.response.status === 405){
     localStorage.clear();
-    window.location.href = '/#/';
+    window.location.href = '/#/login';
   }
   return Promise.reject(error);
 });
